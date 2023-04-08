@@ -18,44 +18,15 @@ public class Implementacion6 {
 
   public static void main(String[] args) throws IOException {
     menuPrincipal();
-    //inicializarArreglo();
     System.out.println("Ejecución exitosa.");
-    //El codigo de una clase, esa clase ya esta hecha. Hay que implementarla. Hacerla en interfaz.
-    //Arreglo finito de  Max 50. 2 metodos: agregar, un metodo de promedio.
-    //El codigo de la clase examen y el pedazito del menu.
-    /*Telefono[] arrTelefonos = new Telefono[3];
-    arrTelefonos[0] = new Telefono("Tel1", "8180946619");
-    arrTelefonos[1] = new Telefono("Tel2", "8183096619");
-    arrTelefonos[2] = new Telefono("Tel3", "8189876619");
-    ArchivosTexto archivoTelefonos = new ArchivosTexto();
-    archivoTelefonos.escribeArchivo(
-      "ProyectoInformatica\AgendaContactos\archivoTelefonos.txt",
-      arrTelefonos);*/
-
-    /*ArchivosTexto archivoTelefonos = new ArchivosTexto();
-    Telefono[] arrTelefonos = archivoTelefonos.leerArchivo(
-      "ProyectoInformatica\AgendaContactos\archivoTelefonos.txt"
-    );
-    System.out.print("pausa");*/
   }
-
-  /*public static void inicializarArreglo() throws IOException {
-    String directorioTrabajo2 = ArchivosTexto5.getDirectorioTrabajo();
-    ArchivosTexto5 archivoTelefonos = new ArchivosTexto5();
-    telefonos =
-      archivoTelefonos.leerArchivo(
-        directorioTrabajo2 + "/archivoTelefonos.txt"
-      );
-  }*/
 
   public static void menuPrincipal() throws IOException {
     int opcion = 0;
     Boolean opcionInvalida = false;
-    /*ArchivosTexto5 datosEscritura = new ArchivosTexto5();*/
-    /*contactos =
-      datosEscritura.leerArchivo(
-        "ProyectoInformatica/AgendaContactos/src/archivoTelefonos.txt"
-      );*/
+    contactos =
+      ArchivosTextoImplementacion.leerContacto("src/ArchivoEscritura.txt");
+
     do {
       System.out.println(
         "Bienvenido a la Guía Telefónica. ¿Qué opción deseas?" +
@@ -82,11 +53,11 @@ public class Implementacion6 {
       } else if (opcion == 4) {
         borrarContactos();
       } else if (opcion == 5) {
-        /*datosEscritura.escribeArchivo(
-          "ProyectoInformatica/AgendaContactos/src/archivoTelefonos.txt",
-          telefonos
+        ArchivosTextoImplementacion.escribirArchivo(
+          "src/ArchivoEscritura.txt",
+          contactos
         );
-        System.out.println("Contactos guardados.");*/
+        System.out.println("Contactos guardados.");
       }
     } while (opcion != 6);
   }
@@ -149,13 +120,7 @@ public class Implementacion6 {
         editarCorreos();
       } else if (opcion == 4) {
         borrarCorreos();
-      } else if (opcion == 5) {
-        /*datosEscritura.escribeArchivo(
-          "ProyectoInformatica/AgendaContactos/src/archivoTelefonos.txt",
-          telefonos
-        );
-        System.out.println("Contactos guardados.");*/
-      }
+      } else if (opcion == 5) {}
     } while (opcion != 5);
   }
 
@@ -367,7 +332,9 @@ public class Implementacion6 {
         listarCorreos3();
       }
     } else {
-      System.out.println("No tienes contactos aún. ¡Agrega uno!");
+      System.out.println(
+        "No tienes contactos todavía, ¿Qué te parece si agregamos uno?"
+      );
     }
   }
 
@@ -531,6 +498,44 @@ public class Implementacion6 {
       arregloTemporalInterno3[0] = nuevoTelefono;
       contactos[posicion].telefonosEditados(arregloTemporalInterno3);
     }
+  }
+
+  public static Telefono[] agregarTelefonos(Telefono nuevoTelefono)
+    throws IOException {
+    if (telefonos != null) {
+      //Ya hay telefonos
+      int longitudArrTelefonos = telefonos.length;
+      Telefono[] temporalTelefonos = new Telefono[longitudArrTelefonos + 1];
+      for (int i = 0; i < longitudArrTelefonos; i++) {
+        temporalTelefonos[i] = telefonos[i];
+      }
+      temporalTelefonos[longitudArrTelefonos] = nuevoTelefono;
+      telefonos = temporalTelefonos;
+    } else {
+      //No hay Telefonos, telefonos es null
+      telefonos = new Telefono[1];
+      telefonos[0] = nuevoTelefono;
+    }
+    return telefonos;
+  }
+
+  public static Correos[] agregarCorreos(Correos nuevoCorreo)
+    throws IOException {
+    if (correos != null) {
+      //Ya hay telefonos
+      int longitudArrCorreos = correos.length;
+      Correos[] temporalCorreos = new Correos[longitudArrCorreos + 1];
+      for (int i = 0; i < longitudArrCorreos; i++) {
+        temporalCorreos[i] = correos[i];
+      }
+      temporalCorreos[longitudArrCorreos] = nuevoCorreo;
+      correos = temporalCorreos;
+    } else {
+      //No hay Telefonos, telefonos es null
+      correos = new Correos[1];
+      correos[0] = nuevoCorreo;
+    }
+    return correos;
   }
 
   public static void agregarCorreo(Correos nuevoCorreo, int posicion)
